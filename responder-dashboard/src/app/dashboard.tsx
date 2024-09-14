@@ -1,6 +1,6 @@
 // pages/Dashboard.js or Dashboard.tsx
 
-import React from 'react';
+import React from "react";
 import {
   Badge,
   Button,
@@ -15,32 +15,31 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '@/components/ui';
+} from "@/components/ui";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import Sidebar from "@/components/sidebar";
 import {
-  Bird,
-  Bot,
-  Code2,
-  CornerDownLeft,
-  LifeBuoy,
-  Mic,
-  Paperclip,
-  Rabbit,
-  Settings2,
-  SquareTerminal,
-  SquareUser,
-  Triangle,
-  Turtle,
-} from 'lucide-react';
-import { TooltipProvider } from '@/components/ui/tooltip';
-import Sidebar from '@/components/sidebar';
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable";
+import Chat from "@/components/chat";
 
 export function Dashboard() {
   return (
     <TooltipProvider>
       <div className="grid h-screen w-full pl-[56px]">
-      <Sidebar /> 
-      <div className="flex flex-col">
-        {/* <main className="grid flex-1 gap-4 overflow-auto p-4 md:grid-cols-2 lg:grid-cols-3">
+        <Sidebar />
+        <div className="flex flex-col">
+          <ResizablePanelGroup direction="horizontal">
+            <ResizablePanel flex items-start>One</ResizablePanel>
+            <ResizableHandle />
+            <ResizablePanel className="flex items-start">
+              <div><Chat /></div>
+            </ResizablePanel>
+          </ResizablePanelGroup>
+
+          {/* <main className="grid flex-1 gap-4 overflow-auto p-4 md:grid-cols-2 lg:grid-cols-3">
           <div className="relative hidden flex-col items-start gap-8 md:flex">
             <form className="grid w-full items-start gap-6">
               <fieldset className="grid gap-6 rounded-lg border p-4">
@@ -192,8 +191,8 @@ export function Dashboard() {
             </form>
           </div>
         </main> */}
+        </div>
       </div>
-    </div>
     </TooltipProvider>
   );
 }

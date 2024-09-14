@@ -18,7 +18,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 const Sidebar = () => {
   return (
     <aside className="inset-y fixed left-0 z-20 flex h-full flex-col border-r">
-      <div className="border-b p-2 mt-2">
+      <div className="border-b p-2">
         <Button variant="outline" size="icon" aria-label="Home">
           <Triangle className="size-5 fill-foreground" />
         </Button>
