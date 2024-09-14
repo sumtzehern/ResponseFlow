@@ -17,8 +17,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Vision Responder",
-  description: "Compter Vision Responder",
+  title: "ScreenAI",
+  description: "AI Emergency Call Screener",
 };
 
 export default function RootLayout({
