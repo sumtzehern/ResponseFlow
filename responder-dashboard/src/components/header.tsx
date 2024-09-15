@@ -6,7 +6,7 @@ export const Header: React.FC = () => {
           <div className="flex">
             <a href="#" className="flex-shrink-0 flex items-center">
               <span className="text-xl font-bold tracking-tight">
-                ScreenAI
+                ResponseFlow
               </span>
             </a>
           </div>
