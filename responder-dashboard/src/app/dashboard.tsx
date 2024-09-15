@@ -44,10 +44,8 @@ export function Dashboard() {
   useEffect(() => {
     async function fetchData() {
       try {
-        // const response = await fetch('/api/webhook')  // Fetch existing incidents from API route
-        const response = await fetch(
-          "https://ec1e-2607-b400-26-0-3138-afdd-701a-b933.ngrok-free.app/api/webhook"
-        ); // Fetch existing incidents from API route
+        // const response = await fetch("/api/webhook"); // Fetch existing incidents from API route
+        const response = await fetch("https://032a-65-222-240-195.ngrok-free.app/api/webhook");
         if (response.ok) {
           const data = await response.json();
 
@@ -61,23 +59,19 @@ export function Dashboard() {
             fullData: incident, // Store full data for detailed view
           }));
 
-          setCallDetails(simplifiedData); // Update state with simplified data
-          console.log("Fetched simplified data:", simplifiedData); // Log for debugging
+          // Sort the data based on priority (ascending order: lower number = higher priority)
+          const sortedData = simplifiedData.sort(
+            (a, b) => parseInt(a.priority) - parseInt(b.priority)
+          );
+
+          setCallDetails(sortedData); // Update state with sorted data
+          console.log("Fetched and sorted simplified data:", sortedData); // Log for debugging
         } else {
           console.error("Error fetching data:", response.statusText);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
-
-      // Set up polling to call fetchData every 5 seconds (5000 milliseconds)
-      // const intervalId = setInterval(fetchData, 5000);
-
-      // // Fetch data initially when the component mounts
-      // fetchData();
-
-      // // Clean up interval when the component unmounts
-      // return () => clearInterval(intervalId);
     }
     fetchData(); // Initial fetch
   }, []);
@@ -116,14 +110,12 @@ export function Dashboard() {
                         </div>
                       </CardHeader>
                       <CardContent>
-                        <div className="mb-1">{details.what}</div>
-                        <div className="mb-1">{details.description}</div>
+                        <div className="flex flex-col">
+                          <div className="font-bold">{details.what}</div>
+                          <div>{details.description}</div>
+                        </div>
                       </CardContent>
-                      <CardFooter className="absolute bottom-2 right-2">
-                        <Button className="w-full hover:bg-green-700" size="sm">
-                          Respond
-                        </Button>
-                      </CardFooter>
+                      <CardFooter className="absolute bottom-2 right-2"></CardFooter>
                     </Card>
                   );
                 })}

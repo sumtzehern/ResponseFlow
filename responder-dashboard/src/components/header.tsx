@@ -1,3 +1,5 @@
+import logo from '../assets/logo.png';
+
 export const Header: React.FC = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 bg-white shadow-md z-10">
