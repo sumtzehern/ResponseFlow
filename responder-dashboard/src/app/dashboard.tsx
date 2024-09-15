@@ -91,7 +91,7 @@ export function Dashboard() {
         <div className="flex flex-col w-full">
           <ResizablePanelGroup direction="horizontal">
             <ResizablePanel className="flex justify-center items-start">
-              <div className="w-[60%] flex flex-col space-y-4"> {/* Vertical stacking with spacing */}
+              <div className="w-[80%] flex flex-col space-y-4"> {/* Vertical stacking with spacing */}
                 {callDetails.map((details, index) => {
                   const [date, time] = details.when.split(" - "); // Split date and time
                   return (
