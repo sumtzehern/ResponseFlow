@@ -1,5 +1,3 @@
-// pages/Dashboard.js or Dashboard.tsx
-
 import React from "react";
 import {
   Badge,
@@ -24,173 +22,85 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import Chat from "@/components/chat";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
+const getPriorityColor = (priority: string) => {
+  switch (priority) {
+    case "1":
+      return "bg-green-500"; // Low priority
+    case "2":
+      return "bg-yellow-500"; // Medium priority
+    case "3":
+      return "bg-orange-500"; // High priority
+    case "4":
+      return "bg-red-500"; // Critical priority
+    default:
+      return "bg-gray-300"; // Default color
+  }
+};
 
 export function Dashboard() {
+  const callDetails = {
+    who: "John Doe",
+    where: "123 Main St, Springfield",
+    what: "Fire in a residential area",
+    when: "Sept 14, 2024 - 12:30 PM",
+    priority: "4",
+  };
+
+  const [date, time] = callDetails.when.split(" - "); // Split date and time
+
   return (
     <TooltipProvider>
       <div className="grid h-screen w-full pl-[56px]">
         <Sidebar />
         <div className="flex flex-col">
           <ResizablePanelGroup direction="horizontal">
-            <ResizablePanel flex items-start>One</ResizablePanel>
+            <ResizablePanel className="flex justify-center items-center">
+              <div className="w-[60%]"> {/* Decreased width */}
+                <Card className="w-full h-40 relative overflow-hidden">
+                  <CardHeader className="relative">
+                    <div className="flex items-center">
+                      <CardTitle>{callDetails.who}</CardTitle>
+                      <span
+                        className={`inline-block ml-2 text-white text-sm font-bold rounded-full h-6 w-6 flex items-center justify-center ${getPriorityColor(
+                          callDetails.priority
+                        )}`}
+                      >
+                        {callDetails.priority}
+                      </span>
+                    </div>
+                    {/* Date and time with right-justified time */}
+                    <div className="absolute top-0 right-0 text-sm text-gray-500 p-2 flex flex-col items-end">
+                      <div>{date}</div>
+                      <div className="text-right">{time}</div>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="mb-1">{callDetails.what}</div>
+                    <div className="mb-1">{callDetails.where}</div>
+                  </CardContent>
+                  <CardFooter className="absolute bottom-2 right-2">
+                    <Button variant="outline" size="sm">
+                      Respond
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </div>
+            </ResizablePanel>
             <ResizableHandle />
-            <ResizablePanel className="flex items-start">
-              <div><Chat /></div>
+            <ResizablePanel className="flex justify-center items-center">
+              <div className="w-[60%]">
+                <Chat />
+              </div>
             </ResizablePanel>
           </ResizablePanelGroup>
-
-          {/* <main className="grid flex-1 gap-4 overflow-auto p-4 md:grid-cols-2 lg:grid-cols-3">
-          <div className="relative hidden flex-col items-start gap-8 md:flex">
-            <form className="grid w-full items-start gap-6">
-              <fieldset className="grid gap-6 rounded-lg border p-4">
-                <legend className="-ml-1 px-1 text-sm font-medium">
-                  Settings
-                </legend>
-                <div className="grid gap-3 mt-10">
-                  <Label htmlFor="model">Model</Label>
-                  <Select>
-                    <SelectTrigger
-                      id="model"
-                      className="items-start [&_[data-description]]:hidden"
-                    >
-                      <SelectValue placeholder="Select a model" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="genesis">
-                        <div className="flex items-start gap-3 text-muted-foreground">
-                          <Rabbit className="size-5" />
-                          <div className="grid gap-0.5">
-                            <p>
-                              Neural{" "}
-                              <span className="font-medium text-foreground">
-                                Genesis
-                              </span>
-                            </p>
-                            <p className="text-xs" data-description>
-                              Our fastest model for general use cases.
-                            </p>
-                          </div>
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="explorer">
-                        <div className="flex items-start gap-3 text-muted-foreground">
-                          <Bird className="size-5" />
-                          <div className="grid gap-0.5">
-                            <p>
-                              Neural{" "}
-                              <span className="font-medium text-foreground">
-                                Explorer
-                              </span>
-                            </p>
-                            <p className="text-xs" data-description>
-                              Performance and speed for efficiency.
-                            </p>
-                          </div>
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="quantum">
-                        <div className="flex items-start gap-3 text-muted-foreground">
-                          <Turtle className="size-5" />
-                          <div className="grid gap-0.5">
-                            <p>
-                              Neural{" "}
-                              <span className="font-medium text-foreground">
-                                Quantum
-                              </span>
-                            </p>
-                            <p className="text-xs" data-description>
-                              The most powerful model for complex computations.
-                            </p>
-                          </div>
-                        </div>
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="grid gap-3">
-                  <Label htmlFor="temperature">Temperature</Label>
-                  <Input id="temperature" type="number" placeholder="0.4" />
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="grid gap-3">
-                    <Label htmlFor="top-p">Top P</Label>
-                    <Input id="top-p" type="number" placeholder="0.7" />
-                  </div>
-                  <div className="grid gap-3">
-                    <Label htmlFor="top-k">Top K</Label>
-                    <Input id="top-k" type="number" placeholder="0.0" />
-                  </div>
-                </div>
-              </fieldset>
-              <fieldset className="grid gap-6 rounded-lg border p-4">
-                <legend className="-ml-1 px-1 text-sm font-medium">
-                  Messages
-                </legend>
-                <div className="grid gap-3">
-                  <Label htmlFor="role">Role</Label>
-                  <Select defaultValue="system">
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a role" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="system">System</SelectItem>
-                      <SelectItem value="user">User</SelectItem>
-                      <SelectItem value="assistant">Assistant</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="grid gap-3">
-                  <Label htmlFor="content">Content</Label>
-                  <Textarea
-                    id="content"
-                    placeholder="You are a..."
-                    className="min-h-[9.5rem]"
-                  />
-                </div>
-              </fieldset>
-            </form>
-          </div>
-          <div className="relative flex h-full min-h-[50vh] flex-col rounded-xl bg-muted/50 p-4 lg:col-span-2">
-            <Badge variant="outline" className="absolute right-3 top-3">
-              Output
-            </Badge>
-            <div className="flex-1" />
-            <form className="relative overflow-hidden rounded-lg border bg-background focus-within:ring-1 focus-within:ring-ring">
-              <Label htmlFor="message" className="sr-only">
-                Message
-              </Label>
-              <Textarea
-                id="message"
-                placeholder="Type your message here..."
-                className="min-h-12 resize-none border-0 p-3 shadow-none focus-visible:ring-0"
-              />
-              <div className="flex items-center p-3 pt-0">
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button variant="ghost" size="icon">
-                      <Paperclip className="size-4" />
-                      <span className="sr-only">Attach file</span>
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent side="top">Attach File</TooltipContent>
-                </Tooltip>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button variant="ghost" size="icon">
-                      <Mic className="size-4" />
-                      <span className="sr-only">Use Microphone</span>
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent side="top">Use Microphone</TooltipContent>
-                </Tooltip>
-                <Button type="submit" size="sm" className="ml-auto gap-1.5">
-                  Send Message
-                  <CornerDownLeft className="size-3.5" />
-                </Button>
-              </div>
-            </form>
-          </div>
-        </main> */}
         </div>
       </div>
     </TooltipProvider>
